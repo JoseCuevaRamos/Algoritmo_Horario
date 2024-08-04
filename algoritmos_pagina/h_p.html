@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Universidad Peruana Cayetano Heredia</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
+</head>
+<body class="bg-gray-100">
+    <div class="min-h-screen flex flex-col">
+        <div class="bg-red-950 p-1 flex justify-between items-center">
+            <img src="https://evp-upch.com/pluginfile.php/1/theme_eguru/logo/1717711309/Logo_evp_2024.png" alt="University logo" class="h-24">
+            <a href="javascript:history.back()" class="text-white text-lg flex items-center">
+                <i class="fas fa-home mr-2"></i> Inicio
+            </a>
+        </div>
+        <div class="p-4">
+            <h1 class="text-2xl font-bold mb-4">Bienvenido(a), {{ username }}</h1>
+            <h1 class="text-2xl font-bold mb-4">Seleccione los nombres:</h1>
+            <form method="post" action="/h_p">
+                <div class="flex flex-wrap mb-4">
+                    {% for nombre in nombres %}
+                    <div class="flex items-center mr-4 mb-2">
+                        <input type="checkbox" name="selected_names" value="{{ nombre }}" class="mr-2">
+                        <label>{{ nombre }}</label>
+                    </div>
+                    {% endfor %}
+                </div>
+                <button type="submit" class="bg-blue-500 text-white px-4 py-2">Submit</button>
+            </form>
+            <h1 class="text-2xl font-bold mb-4">A continuación puede visualizar su horario</h1>
+            <table class="min-w-full bg-white">
+                <thead class="bg-gray-800 text-white">
+                    <tr>
+                        {% if data %}
+                            {% for header in data[0].keys() %}
+                            <th class="py-2 px-4">{{ header }}</th>
+                            {% endfor %}
+                        {% endif %}
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for row in data %}
+                    <tr class="bg-gray-100">
+                        {% for value in row.values() %}
+                        <td class="border py-2 px-4">{{ value }}</td>
+                        {% endfor %}
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+</body>
+</html>
